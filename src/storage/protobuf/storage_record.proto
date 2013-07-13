@@ -1,0 +1,49 @@
+package GraphDB.StorageRecord;
+
+option optimize_for = LITE_RUNTIME;
+
+message Record {
+	extensions 100 to max;
+
+	enum Type {
+		EMPTY        = 1;
+		STRING       = 2;
+		UINT64       = 3;
+		INT64        = 4;
+		DOUBLE       = 5;
+	}
+
+	required Type type = 1;
+}
+
+message StringRecord {
+	extend Record {
+		required StringRecord record = 100;
+	}
+
+	required string content = 1;
+}
+
+message UInt64Record {
+	extend Record {
+		required UInt64Record record = 101;
+	}
+
+	required uint64 content = 1;
+}
+
+message Int64Record {
+	extend Record {
+		required Int64Record record = 102;
+	}
+
+	required int64 content = 1;
+}
+
+message DoubleRecord {
+	extend Record {
+		required DoubleRecord record = 103;
+	}
+
+	required double content = 1;
+}

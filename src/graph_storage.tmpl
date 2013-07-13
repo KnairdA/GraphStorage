@@ -1,0 +1,32 @@
+#ifndef GRAPHDB_SRC_GRAPH_STORAGE_TMPL_
+#define GRAPHDB_SRC_GRAPH_STORAGE_TMPL_
+
+#include "storage/query/edge_iterator.h"
+#include "query/logic/logic_and_iterator.h"
+#include "query/logic/logic_or_iterator.h"
+#include "query/logic/logic_xor_iterator.h"
+#include "query/dummy_iterator.h"
+
+#include "storage/query/edge_subscription.h"
+#include "query/logic/logic_and_subscription.h"
+#include "query/logic/logic_or_subscription.h"
+#include "query/logic/logic_xor_subscription.h"
+
+namespace GraphDB {
+
+template LogicAndIterator::Ptr GraphStorage::getIterator<LogicAndIterator>(const QueryState*) const;
+template LogicOrIterator::Ptr  GraphStorage::getIterator<LogicOrIterator>(const QueryState*) const;
+template LogicXorIterator::Ptr GraphStorage::getIterator<LogicXorIterator>(const QueryState*) const;
+template DummyIterator::Ptr    GraphStorage::getIterator<DummyIterator>(const QueryState*) const;
+
+template LogicSubscription::Ptr GraphStorage::getLogicSubscription<LogicAndSubscription>(SubscriptionRecipient*);
+template LogicSubscription::Ptr GraphStorage::getLogicSubscription<LogicOrSubscription>(SubscriptionRecipient*);
+template LogicSubscription::Ptr GraphStorage::getLogicSubscription<LogicXorSubscription>(SubscriptionRecipient*);
+
+template uint16_t GraphStorage::resolveIdentifier<IdentifierType::EdgeType, uint16_t>(std::string, PropertyValue&);
+template uint16_t GraphStorage::resolveIdentifier<IdentifierType::NodePropertyType, uint16_t>(std::string, PropertyValue&);
+template uint32_t GraphStorage::resolveIdentifier<IdentifierType::NodeId, uint32_t>(std::string, PropertyValue&);
+
+}
+
+#endif  // GRAPHDB_SRC_GRAPH_STORAGE_TMPL_

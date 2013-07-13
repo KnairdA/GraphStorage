@@ -1,0 +1,16 @@
+#ifndef GRAPHDB_SRC_STORAGE_QUERY_STORAGE_CURSOR_TMPL_
+#define GRAPHDB_SRC_STORAGE_QUERY_STORAGE_CURSOR_TMPL_
+
+#include "storage/id/edge_id.h"
+#include "storage/id/identifier_id.h"
+#include "storage/id/node_property_id.h"
+
+namespace GraphDB {
+
+template class StorageCursor<EdgeId>;
+template class StorageCursor<IdentifierId>;
+template class StorageCursor<NodePropertyId>;
+
+}
+
+#endif  // GRAPHDB_SRC_STORAGE_QUERY_STORAGE_CURSOR_TMPL_

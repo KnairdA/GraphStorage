@@ -1,0 +1,24 @@
+#ifndef GRAPHDB_SRC_WRITE_WRITE_BUFFER_TMPL_
+#define GRAPHDB_SRC_WRITE_WRITE_BUFFER_TMPL_
+
+#include "storage/id/edge_id.h"
+#include "storage/id/node_property_id.h"
+#include "storage/id/identifier_id.h"
+
+namespace GraphDB {
+
+template void WriteBuffer::set<EdgeId>(const EdgeId&, const PropertyValue&);
+template void WriteBuffer::set<NodePropertyId>(const NodePropertyId&, const PropertyValue&);
+template void WriteBuffer::set<IdentifierId>(const IdentifierId&, const PropertyValue&);
+
+template void WriteBuffer::set<EdgeId>(const EdgeId&);
+template void WriteBuffer::set<NodePropertyId>(const NodePropertyId&);
+template void WriteBuffer::set<IdentifierId>(const IdentifierId&);
+
+template void WriteBuffer::remove<EdgeId>(const EdgeId&);
+template void WriteBuffer::remove<NodePropertyId>(const NodePropertyId&);
+template void WriteBuffer::remove<IdentifierId>(const IdentifierId&);
+
+}
+
+#endif  // GRAPHDB_SRC_WRITE_WRITE_BUFFER_TMPL_

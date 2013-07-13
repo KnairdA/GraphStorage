@@ -1,0 +1,36 @@
+#ifndef GRAPHDB_SRC_STORAGE_STORAGE_FACADE_TMPL_
+#define GRAPHDB_SRC_STORAGE_STORAGE_FACADE_TMPL_
+
+#include "storage/id/edge_id.h"
+#include "storage/id/identifier_id.h"
+#include "storage/id/node_property_id.h"
+
+namespace GraphDB {
+
+template StorageCursor<EdgeId>::Ptr StorageFacade::getCursor<EdgeId>(const EdgeId&, const QueryState*) const;
+template StorageCursor<IdentifierId>::Ptr StorageFacade::getCursor<IdentifierId>(const IdentifierId&, const QueryState*) const;
+template StorageCursor<NodePropertyId>::Ptr StorageFacade::getCursor<NodePropertyId>(const NodePropertyId&, const QueryState*) const;
+
+template bool StorageFacade::get<EdgeId>(const EdgeId&, PropertyValue&) const;
+template bool StorageFacade::get<IdentifierId>(const IdentifierId&, PropertyValue&) const;
+template bool StorageFacade::get<NodePropertyId>(const NodePropertyId&, PropertyValue&) const;
+
+template bool StorageFacade::check<EdgeId>(const EdgeId&) const;
+template bool StorageFacade::check<IdentifierId>(const IdentifierId&) const;
+template bool StorageFacade::check<NodePropertyId>(const NodePropertyId&) const;
+
+template void StorageFacade::set<EdgeId>(const EdgeId&, const PropertyValue&);
+template void StorageFacade::set<IdentifierId>(const IdentifierId&, const PropertyValue&);
+template void StorageFacade::set<NodePropertyId>(const NodePropertyId&, const PropertyValue&);
+
+template void StorageFacade::set<EdgeId>(const EdgeId&);
+template void StorageFacade::set<IdentifierId>(const IdentifierId&);
+template void StorageFacade::set<NodePropertyId>(const NodePropertyId&);
+
+template void StorageFacade::remove<EdgeId>(const EdgeId&);
+template void StorageFacade::remove<IdentifierId>(const IdentifierId&);
+template void StorageFacade::remove<NodePropertyId>(const NodePropertyId&);
+
+}
+
+#endif  // GRAPHDB_SRC_STORAGE_STORAGE_FACADE_TMPL_

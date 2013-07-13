@@ -1,0 +1,16 @@
+#ifndef GRAPHDB_SRC_STORAGE_BUFFER_UTILS_TMPL_
+#define GRAPHDB_SRC_STORAGE_BUFFER_UTILS_TMPL_
+
+namespace GraphDB {
+
+template void writeNumber<uint32_t>(void*, uint32_t);
+template void writeNumber<uint16_t>(void*, uint16_t);
+template void writeNumber<uint8_t>(void*, uint8_t);
+
+template uint32_t readNumber<uint32_t>(const void*);
+template uint16_t readNumber<uint16_t>(const void*);
+template uint8_t readNumber<uint8_t>(const void*);
+
+}
+
+#endif  // GRAPHDB_SRC_STORAGE_BUFFER_UTILS_TMPL_

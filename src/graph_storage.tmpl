@@ -19,9 +19,9 @@ template LogicOrIterator::Ptr  GraphStorage::getIterator<LogicOrIterator>(const 
 template LogicXorIterator::Ptr GraphStorage::getIterator<LogicXorIterator>(const QueryState*) const;
 template DummyIterator::Ptr    GraphStorage::getIterator<DummyIterator>(const QueryState*) const;
 
-template LogicSubscription::Ptr GraphStorage::getLogicSubscription<LogicAndSubscription>(SubscriptionRecipient*);
-template LogicSubscription::Ptr GraphStorage::getLogicSubscription<LogicOrSubscription>(SubscriptionRecipient*);
-template LogicSubscription::Ptr GraphStorage::getLogicSubscription<LogicXorSubscription>(SubscriptionRecipient*);
+template LogicAndSubscription::Ptr GraphStorage::getSubscription<LogicAndSubscription>(SubscriptionRecipient*);
+template LogicOrSubscription::Ptr  GraphStorage::getSubscription<LogicOrSubscription>(SubscriptionRecipient*);
+template LogicXorSubscription::Ptr GraphStorage::getSubscription<LogicXorSubscription>(SubscriptionRecipient*);
 
 template uint16_t GraphStorage::resolveIdentifier<IdentifierType::EdgeType, uint16_t>(std::string, PropertyValue&);
 template uint16_t GraphStorage::resolveIdentifier<IdentifierType::NodePropertyType, uint16_t>(std::string, PropertyValue&);

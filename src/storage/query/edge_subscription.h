@@ -14,7 +14,7 @@ class EdgeSubscription : public BasicSubscription,
                          public EdgeStreamRecipient {
 	public:
 		EdgeSubscription(EdgeStreamDistributor*,
-		                 StorageFacade*,
+		                 const StorageFacade*,
 		                 SubscriptionRecipient*,
 		                 uint32_t,
 		                 uint16_t,
@@ -28,7 +28,7 @@ class EdgeSubscription : public BasicSubscription,
 
 	private:
 		SubscriptionRecipient* parent_;
-		StorageFacade* storage_;
+		const StorageFacade* storage_;
 		EdgeStreamDistributor* distributor_;
 		EdgeId edge_;
 

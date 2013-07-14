@@ -27,7 +27,7 @@ class GraphStorage {
 		typename Iter::Ptr getIterator(const QueryState*) const;
 
 		template <class Subscription>
-		LogicSubscription::Ptr getLogicSubscription(SubscriptionRecipient*);
+		typename Subscription::Ptr getSubscription(SubscriptionRecipient*);
 
 		template <IdentifierType KeyType, typename ValueType>
 		ValueType resolveIdentifier(std::string, PropertyValue&);

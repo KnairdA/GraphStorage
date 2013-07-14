@@ -5,7 +5,7 @@
 namespace GraphDB {
 
 LogicSubscription::LogicSubscription(EdgeStreamDistributor* distributor,
-                                     StorageFacade* edgeDb,
+                                     const StorageFacade* edgeDb,
                                      SubscriptionRecipient* parent):
 	distributor_(distributor),
 	storage_(edgeDb),

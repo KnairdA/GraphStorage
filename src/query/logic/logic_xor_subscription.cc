@@ -4,11 +4,6 @@
 
 namespace GraphDB {
 
-LogicXorSubscription::LogicXorSubscription(EdgeStreamDistributor* distributor,
-                                           StorageFacade* edgeDb,
-                                           SubscriptionRecipient* parent):
-	LogicSubscription(distributor, edgeDb, parent) { }
-
 bool LogicXorSubscription::check(uint32_t refId) {
 	uint32_t equalToRefId = std::count_if(this->subscriptions_.begin(),
 	                                      this->subscriptions_.end(),

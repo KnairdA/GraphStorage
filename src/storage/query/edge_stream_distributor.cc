@@ -35,13 +35,13 @@ void EdgeStreamDistributor::publish(
 	this->new_event_notify_.notify_one();
 }
 
-EdgeStreamPatternPtr EdgeStreamDistributor::getPattern(
+EdgeStreamPattern::Ptr EdgeStreamDistributor::getPattern(
 	EdgeStreamRecipient* recipient) {
 	std::lock_guard<std::mutex> lock(this->pattern_list_mutex_);
 
 	this->pattern_list_.emplace_back(new EdgeStreamPattern(recipient));
 
-	return std::shared_ptr<EdgeStreamPattern>(this->pattern_list_.back());
+	return EdgeStreamPattern::Ptr(this->pattern_list_.back());
 }
 
 void EdgeStreamDistributor::worker() {
@@ -71,14 +71,14 @@ void EdgeStreamDistributor::patternsCheckMatch(const EdgeStreamEvent& event) {
 	/*this->pattern_list_.erase(
 		std::remove_if(this->pattern_list_.begin(),
 		               this->pattern_list_.end(),
-		               [](EdgeStreamPatternPtr &p) -> bool {
+		               [](EdgeStreamPattern::Ptr &p) -> bool {
 		                   return p.unique();
 		               })
 	);*/
 
 	std::for_each(this->pattern_list_.begin(),
 	              this->pattern_list_.end(),
-	              [&event](EdgeStreamPatternPtr &p) {
+	              [&event](EdgeStreamPattern::Ptr &p) {
 	                  p->evaluate(event);
 	              });
 }

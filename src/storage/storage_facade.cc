@@ -54,45 +54,6 @@ bool StorageFacade::check(const Key& id) const {
 	return !this->db_->Get(leveldb::ReadOptions(), key, &value).IsNotFound();
 }
 
-template <class Key>
-void StorageFacade::set(const Key& id, const PropertyValue& value) {
-	BufferGuard valueBuffer(value.record.ByteSize());
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
-
-	value.record.SerializeToArray(valueBuffer.data, valueBuffer.size);
-
-	this->db_->Put(
-		leveldb::WriteOptions(),
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size),
-		leveldb::Slice(reinterpret_cast<char*>(valueBuffer.data),
-		               valueBuffer.size)
-	);
-}
-
-template <class Key>
-void StorageFacade::set(const Key& id) {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
-
-	this->db_->Put(
-		leveldb::WriteOptions(),
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size),
-		leveldb::Slice()
-	);
-}
-
-template <class Key>
-void StorageFacade::remove(const Key& id) {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
-
-	this->db_->Delete(
-		leveldb::WriteOptions(),
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size)
-	);
-}
-
 template <class Key> typename
 std::unique_ptr<leveldb::Iterator> StorageFacade::getInternalCursor(
 	const Key& id,

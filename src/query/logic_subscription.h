@@ -17,7 +17,7 @@ class LogicSubscription : public BasicSubscription {
 		typedef std::unique_ptr<LogicSubscription> Ptr;
 
 		LogicSubscription(EdgeStreamDistributor*,
-		                  StorageFacade*,
+		                  const StorageFacade*,
 		                  SubscriptionRecipient*);
 		virtual ~LogicSubscription() { }
 
@@ -34,7 +34,7 @@ class LogicSubscription : public BasicSubscription {
 
 	private:
 		EdgeStreamDistributor* distributor_;
-		StorageFacade* storage_;
+		const StorageFacade* storage_;
 		SubscriptionRecipient* parent_;
 
 };

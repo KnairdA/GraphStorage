@@ -19,18 +19,6 @@ template bool StorageFacade::check<EdgeId>(const EdgeId&) const;
 template bool StorageFacade::check<IdentifierId>(const IdentifierId&) const;
 template bool StorageFacade::check<NodePropertyId>(const NodePropertyId&) const;
 
-template void StorageFacade::set<EdgeId>(const EdgeId&, const PropertyValue&);
-template void StorageFacade::set<IdentifierId>(const IdentifierId&, const PropertyValue&);
-template void StorageFacade::set<NodePropertyId>(const NodePropertyId&, const PropertyValue&);
-
-template void StorageFacade::set<EdgeId>(const EdgeId&);
-template void StorageFacade::set<IdentifierId>(const IdentifierId&);
-template void StorageFacade::set<NodePropertyId>(const NodePropertyId&);
-
-template void StorageFacade::remove<EdgeId>(const EdgeId&);
-template void StorageFacade::remove<IdentifierId>(const IdentifierId&);
-template void StorageFacade::remove<NodePropertyId>(const NodePropertyId&);
-
 }
 
 #endif  // GRAPHDB_SRC_STORAGE_STORAGE_FACADE_TMPL_

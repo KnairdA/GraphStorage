@@ -20,17 +20,17 @@ QueryState::Ptr GraphStorage::getQueryState() const {
 }
 
 template <class Iter>
-typename Iter::Ptr GraphStorage::getIterator(const QueryState* state)
-	const {
+typename Iter::Ptr
+GraphStorage::getIterator(const QueryState* state) const {
 	return typename Iter::Ptr(
 		new Iter(&this->storage_facade_, state)
 	);
 }
 
 template <class Subscription>
-LogicSubscription::Ptr
-GraphStorage::getLogicSubscription(SubscriptionRecipient* parent) {
-	return LogicSubscription::Ptr(
+typename Subscription::Ptr
+GraphStorage::getSubscription(SubscriptionRecipient* parent) {
+	return typename Subscription::Ptr(
 		new Subscription(&this->edge_stream_distributor_,
 		                 &this->storage_facade_,
 		                 parent)

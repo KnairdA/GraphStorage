@@ -3,7 +3,7 @@
 namespace GraphDB {
 
 EdgeSubscription::EdgeSubscription(EdgeStreamDistributor* distributor,
-                                   StorageFacade* storage,
+                                   const StorageFacade* storage,
                                    SubscriptionRecipient* parent,
                                    uint32_t fromId,
                                    uint16_t typeId,

@@ -7,9 +7,7 @@ namespace GraphDB {
 
 class LogicAndSubscription : public LogicSubscription {
 	public:
-		LogicAndSubscription(EdgeStreamDistributor*,
-		                     StorageFacade*,
-		                     SubscriptionRecipient*);
+		using LogicSubscription::LogicSubscription;
 
 		virtual bool check(uint32_t);
 };

@@ -7,9 +7,7 @@ namespace GraphDB {
 
 class LogicXorSubscription : public LogicSubscription {
 	public:
-		LogicXorSubscription(EdgeStreamDistributor*,
-		                     StorageFacade*,
-		                     SubscriptionRecipient*);
+		using LogicSubscription::LogicSubscription;
 
 		virtual bool check(uint32_t);
 };

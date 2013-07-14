@@ -1,6 +1,8 @@
 #ifndef GRAPHDB_SRC_STORAGE_QUERY_EDGE_STREAM_PATTERN_H_
 #define GRAPHDB_SRC_STORAGE_QUERY_EDGE_STREAM_PATTERN_H_
 
+#include <memory>
+
 #include "storage/id/edge_id.h"
 #include "storage/query/edge_stream_event.h"
 
@@ -13,6 +15,8 @@ class EdgeStreamRecipient {
 
 class EdgeStreamPattern {
 	public:
+		typedef std::shared_ptr<EdgeStreamPattern> Ptr;
+
 		EdgeStreamPattern(EdgeStreamRecipient*);
 
 		bool evaluate(const EdgeStreamEvent&);

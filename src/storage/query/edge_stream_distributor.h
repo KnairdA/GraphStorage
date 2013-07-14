@@ -15,8 +15,6 @@
 
 namespace GraphDB {
 
-typedef std::shared_ptr<EdgeStreamPattern> EdgeStreamPatternPtr;
-
 class EdgeStreamDistributor {
 	public:
 		EdgeStreamDistributor();
@@ -25,7 +23,7 @@ class EdgeStreamDistributor {
 		void publish(EdgeStreamEvent);
 		void publish(const std::vector<EdgeStreamEvent>&);
 
-		EdgeStreamPatternPtr getPattern(EdgeStreamRecipient*);
+		EdgeStreamPattern::Ptr getPattern(EdgeStreamRecipient*);
 
 	private:
 		void worker();
@@ -35,7 +33,7 @@ class EdgeStreamDistributor {
 		std::atomic<bool> stop_thread_;
 
 		std::deque<EdgeStreamEvent> event_queue_;
-		std::vector<EdgeStreamPatternPtr> pattern_list_;
+		std::vector<EdgeStreamPattern::Ptr> pattern_list_;
 
 		std::mutex event_queue_mutex_;
 		std::mutex pattern_list_mutex_;

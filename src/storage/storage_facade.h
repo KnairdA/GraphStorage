@@ -25,12 +25,6 @@ class StorageFacade {
 		bool get(const Key&, PropertyValue&) const;
 		template <class Key>
 		bool check(const Key&) const;
-		template <class Key>
-		void set(const Key&, const PropertyValue&);
-		template <class Key>
-		void set(const Key&);
-		template <class Key>
-		void remove(const Key&);
 
 	private:
 		template <class Key>

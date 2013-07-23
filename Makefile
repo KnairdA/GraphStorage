@@ -40,7 +40,6 @@ QUERY_LOGIC_SRC         = $(QUERY_LOGIC_DIR)/logic_and_iterator.cc \
                           $(QUERY_LOGIC_DIR)/logic_or_subscription.cc \
                           $(QUERY_LOGIC_DIR)/logic_xor_subscription.cc
 GRAPH_STORAGE_SRC       = $(SRC_DIR)/graph_storage.cc
-                          #$(SRC_DIR)/key_manager.cc
 
 SRC = $(TEST_SRC) \
       $(STORAGE_SRC) \

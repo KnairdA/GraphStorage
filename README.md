@@ -14,7 +14,6 @@ Additionally changes to edges can be monitored using a subscription mechanism.
 * C++ compiler with support for C++11 (tested with current versions of GCC and clang on Linux)
 * Google Protobuf
 * Google LevelDB
-* Poco ByteOrder header
 
 ## State
 

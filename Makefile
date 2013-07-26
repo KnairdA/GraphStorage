@@ -1,5 +1,5 @@
 CXX      = g++
-CXXFLAGS = -g -W -Wall -Wextra -pedantic -std=c++11 -Isrc
+CXXFLAGS = -g -W -Wall -Wextra -pedantic -std=c++11 -fpic -Isrc
 LDLIBS   = -lleveldb -lprotobuf -ltcmalloc
 
 SRC_DIR                 = src
@@ -10,7 +10,6 @@ STORAGE_WRITE_DIR       = $(STORAGE_DIR)/write
 QUERY_DIR               = $(SRC_DIR)/query
 QUERY_LOGIC_DIR         = $(QUERY_DIR)/logic
 
-TEST_SRC                = main.cc
 STORAGE_SRC             = $(STORAGE_DIR)/storage_guard.cc \
                           $(STORAGE_DIR)/buffer_utils.cc \
                           $(STORAGE_DIR)/storage_facade.cc \
@@ -41,8 +40,7 @@ QUERY_LOGIC_SRC         = $(QUERY_LOGIC_DIR)/logic_and_iterator.cc \
                           $(QUERY_LOGIC_DIR)/logic_xor_subscription.cc
 GRAPH_STORAGE_SRC       = $(SRC_DIR)/graph_storage.cc
 
-SRC = $(TEST_SRC) \
-      $(STORAGE_SRC) \
+SRC = $(STORAGE_SRC) \
       $(STORAGE_PROTOBUF_SRC) \
       $(STORAGE_QUERY_SRC) \
       $(STORAGE_WRITE_SRC) \
@@ -55,7 +53,7 @@ OBJ = $(subst .cc,.o,$(SRC))
 all: dev
 
 dev: $(OBJ)
-	$(CXX) -o main $(OBJ) $(CXXFLAGS) $(LDLIBS)
+	$(CXX) -shared -o libGraphStorage.so $(OBJ) $(CXXFLAGS) $(LDLIBS)
 
 depend: .depend
 

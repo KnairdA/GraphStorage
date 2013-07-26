@@ -26,9 +26,9 @@ STORAGE_QUERY_SRC       = $(STORAGE_QUERY_DIR)/query_state.cc \
                           $(STORAGE_QUERY_DIR)/edge_stream_distributor.cc \
                           $(STORAGE_QUERY_DIR)/edge_stream_pattern.cc \
                           $(STORAGE_QUERY_DIR)/edge_subscription.cc
-STORAGE_WRITE_SRC       = $(STORAGE_WRITE_DIR)/write_buffer.cc \
-                          $(STORAGE_WRITE_DIR)/maintenance_buffer.cc \
-                          $(STORAGE_WRITE_DIR)/node_buffer.cc 
+STORAGE_WRITE_SRC       = $(STORAGE_WRITE_DIR)/write_batch.cc \
+                          $(STORAGE_WRITE_DIR)/maintenance_batch.cc \
+                          $(STORAGE_WRITE_DIR)/node_batch.cc 
 QUERY_SRC               = $(QUERY_DIR)/logic_iterator.cc \
                           $(QUERY_DIR)/dummy_iterator.cc \
                           $(QUERY_DIR)/logic_subscription.cc \

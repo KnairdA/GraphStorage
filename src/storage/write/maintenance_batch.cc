@@ -1,8 +1,8 @@
-#include "storage/write/maintenance_buffer.h"
+#include "storage/write/maintenance_batch.h"
 
 namespace GraphDB {
 
-void MaintenanceBuffer::createNode(uint32_t id) {
+void MaintenanceBatch::createNode(uint32_t id) {
 	EdgeId edge(0, 1, EdgeDirection::Outbound, id);
 
 	this->set<EdgeId>(edge);
@@ -11,7 +11,7 @@ void MaintenanceBuffer::createNode(uint32_t id) {
 	);
 }
 
-void MaintenanceBuffer::discardNode(uint32_t id) {
+void MaintenanceBatch::discardNode(uint32_t id) {
 	EdgeId edge(0, 1, EdgeDirection::Outbound, id);
 
 	this->remove<EdgeId>(edge);

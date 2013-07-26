@@ -8,8 +8,8 @@
 #include "storage/storage_guard.h"
 #include "storage/storage_facade.h"
 
-#include "storage/write/node_buffer.h"
-#include "storage/write/maintenance_buffer.h"
+#include "storage/write/node_batch.h"
+#include "storage/write/maintenance_batch.h"
 #include "storage/query/edge_stream_distributor.h"
 
 #include "query/logic_iterator.h"
@@ -19,7 +19,8 @@ namespace GraphDB {
 
 class GraphStorage {
 	public:
-		GraphStorage(const std::string&);
+		explicit GraphStorage(const std::string&);
+		GraphStorage(const std::string&, leveldb::Options);
 
 		QueryState::Ptr getQueryState() const;
 
@@ -32,7 +33,7 @@ class GraphStorage {
 		template <IdentifierType KeyType, typename ValueType>
 		ValueType resolveIdentifier(std::string, PropertyValue&);
 
-		void commitBuffer(WriteBuffer*);
+		void commitBatch(WriteBatch*);
 
 	private:
 		StorageGuard storage_;

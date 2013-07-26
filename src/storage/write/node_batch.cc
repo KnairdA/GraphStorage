@@ -1,18 +1,18 @@
-#include "storage/write/node_buffer.h"
+#include "storage/write/node_batch.h"
 
 #include "storage/id/edge_id.h"
 #include "storage/id/node_property_id.h"
 
 namespace GraphDB {
 
-NodeBuffer::NodeBuffer(BasicIterator* const iter):
+NodeBatch::NodeBatch(BasicIterator* const iter):
 	iterator_(iter) { }
 
-uint32_t NodeBuffer::getCurrent() {
+uint32_t NodeBatch::getCurrent() {
 	return this->iterator_->getCurrent();
 }
 
-void NodeBuffer::create() {
+void NodeBatch::create() {
 	EdgeId edge(0, 1, EdgeDirection::Outbound, this->getCurrent());
 
 	this->set<EdgeId>(edge);
@@ -21,7 +21,7 @@ void NodeBuffer::create() {
 	);
 }
 
-void NodeBuffer::discard() {
+void NodeBatch::discard() {
 	EdgeId edge(0, 1, EdgeDirection::Outbound, this->getCurrent());
 
 	this->remove<EdgeId>(edge);
@@ -37,7 +37,7 @@ void NodeBuffer::discard() {
 	);
 }
 
-void NodeBuffer::connectTo(uint32_t toId, uint16_t typeId) {
+void NodeBatch::connectTo(uint32_t toId, uint16_t typeId) {
 	EdgeId edge(this->getCurrent(), typeId, EdgeDirection::Outbound, toId);
 
 	this->set<EdgeId>(edge);
@@ -53,7 +53,7 @@ void NodeBuffer::connectTo(uint32_t toId, uint16_t typeId) {
 	);
 }
 
-void NodeBuffer::disconnectFrom(uint32_t toId, uint16_t typeId) {
+void NodeBatch::disconnectFrom(uint32_t toId, uint16_t typeId) {
 	EdgeId edge(this->getCurrent(), typeId, EdgeDirection::Outbound, toId);
 
 	this->remove<EdgeId>(edge);
@@ -69,14 +69,14 @@ void NodeBuffer::disconnectFrom(uint32_t toId, uint16_t typeId) {
 	);
 }
 
-void NodeBuffer::setProperty(uint16_t propertyId, const PropertyValue& value) {
+void NodeBatch::setProperty(uint16_t propertyId, const PropertyValue& value) {
 	this->set<NodePropertyId>(
 		NodePropertyId(this->getCurrent(), propertyId),
 		value
 	);
 }
 
-void NodeBuffer::removeProperty(uint16_t propertyId) {
+void NodeBatch::removeProperty(uint16_t propertyId) {
 	this->remove<NodePropertyId>(
 		NodePropertyId(this->getCurrent(), propertyId)
 	);

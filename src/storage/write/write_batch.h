@@ -1,5 +1,5 @@
-#ifndef GRAPHDB_SRC_STORAGE_WRITE_WRITE_BUFFER_H_
-#define GRAPHDB_SRC_STORAGE_WRITE_WRITE_BUFFER_H_
+#ifndef GRAPHDB_SRC_STORAGE_WRITE_WRITE_BATCH_H_
+#define GRAPHDB_SRC_STORAGE_WRITE_WRITE_BATCH_H_
 
 #include <vector>
 #include <memory>
@@ -12,11 +12,11 @@
 
 namespace GraphDB {
 
-class WriteBuffer {
+class WriteBatch {
 	public:
-		typedef std::unique_ptr<WriteBuffer> Ptr;
+		typedef std::unique_ptr<WriteBatch> Ptr;
 
-		virtual ~WriteBuffer();
+		virtual ~WriteBatch();
 
 		void commit(StorageFacade&, EdgeStreamDistributor&);
 
@@ -35,4 +35,4 @@ class WriteBuffer {
 
 }
 
-#endif  // GRAPHDB_SRC_STORAGE_WRITE_WRITE_BUFFER_H_
+#endif  // GRAPHDB_SRC_STORAGE_WRITE_WRITE_BATCH_H_

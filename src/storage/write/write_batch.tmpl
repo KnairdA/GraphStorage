@@ -1,0 +1,24 @@
+#ifndef GRAPHDB_SRC_WRITE_WRITE_BATCH_TMPL_
+#define GRAPHDB_SRC_WRITE_WRITE_BATCH_TMPL_
+
+#include "storage/id/edge_id.h"
+#include "storage/id/node_property_id.h"
+#include "storage/id/identifier_id.h"
+
+namespace GraphDB {
+
+template void WriteBatch::set<EdgeId>(const EdgeId&, const PropertyValue&);
+template void WriteBatch::set<NodePropertyId>(const NodePropertyId&, const PropertyValue&);
+template void WriteBatch::set<IdentifierId>(const IdentifierId&, const PropertyValue&);
+
+template void WriteBatch::set<EdgeId>(const EdgeId&);
+template void WriteBatch::set<NodePropertyId>(const NodePropertyId&);
+template void WriteBatch::set<IdentifierId>(const IdentifierId&);
+
+template void WriteBatch::remove<EdgeId>(const EdgeId&);
+template void WriteBatch::remove<NodePropertyId>(const NodePropertyId&);
+template void WriteBatch::remove<IdentifierId>(const IdentifierId&);
+
+}
+
+#endif  // GRAPHDB_SRC_WRITE_WRITE_BATCH_TMPL_

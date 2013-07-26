@@ -1,15 +1,15 @@
-#ifndef GRAPHDB_SRC_STORAGE_WRITE_MAINTENANCE_BUFFER_H_
-#define GRAPHDB_SRC_STORAGE_WRITE_MAINTENANCE_BUFFER_H_
+#ifndef GRAPHDB_SRC_STORAGE_WRITE_MAINTENANCE_BATCH_H_
+#define GRAPHDB_SRC_STORAGE_WRITE_MAINTENANCE_BATCH_H_
 
 #include "storage/storage_guard.h"
-#include "storage/write/write_buffer.h"
+#include "storage/write/write_batch.h"
 #include "storage/id/identifier_id.h"
 
 namespace GraphDB {
 
-class MaintenanceBuffer : public WriteBuffer {
+class MaintenanceBatch : public WriteBatch {
 	public:
-		typedef std::unique_ptr<MaintenanceBuffer> Ptr;
+		typedef std::unique_ptr<MaintenanceBatch> Ptr;
 
 		void createNode(uint32_t);
 		void discardNode(uint32_t);
@@ -20,7 +20,7 @@ class MaintenanceBuffer : public WriteBuffer {
 };
 
 template <IdentifierType KeyType, typename ValueType>
-void MaintenanceBuffer::setIdentifier(std::string name,
+void MaintenanceBatch::setIdentifier(std::string name,
                                       ValueType value,
                                       PropertyValue& property) {
 	property = static_cast<uint64_t>(value);
@@ -32,4 +32,4 @@ void MaintenanceBuffer::setIdentifier(std::string name,
 
 }
 
-#endif  // GRAPHDB_SRC_STORAGE_WRITE_MAINTENANCE_BUFFER_H_
+#endif  // GRAPHDB_SRC_STORAGE_WRITE_MAINTENANCE_BATCH_H_

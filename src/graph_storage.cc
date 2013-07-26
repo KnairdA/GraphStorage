@@ -13,6 +13,11 @@ GraphStorage::GraphStorage(const std::string& path):
 	storage_facade_(storage_),
 	edge_stream_distributor_() { }
 
+GraphStorage::GraphStorage(const std::string& path, leveldb::Options options):
+	storage_(path, options),
+	storage_facade_(storage_),
+	edge_stream_distributor_() { }
+
 QueryState::Ptr GraphStorage::getQueryState() const {
 	return QueryState::Ptr(
 		new QueryState(this->storage_)
@@ -37,9 +42,9 @@ GraphStorage::getSubscription(SubscriptionRecipient* parent) {
 	);
 }
 
-void GraphStorage::commitBuffer(WriteBuffer* buffer) {
-	buffer->commit(this->storage_facade_,
-	               this->edge_stream_distributor_);
+void GraphStorage::commitBatch(WriteBatch* batch) {
+	batch->commit(this->storage_facade_,
+	              this->edge_stream_distributor_);
 }
 
 template <IdentifierType KeyType, typename ValueType>

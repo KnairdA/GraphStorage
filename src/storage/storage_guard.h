@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "leveldb/db.h"
+#include "leveldb/options.h"
 #include "leveldb/filter_policy.h"
 
 #include "storage/query/query_state.h"
@@ -31,6 +32,7 @@ enum IdentifierType : uint8_t {
 class StorageGuard {
 	public:
 		explicit StorageGuard(const std::string&);
+		StorageGuard(const std::string&, leveldb::Options);
 		~StorageGuard();
 
 		leveldb::DB* getDb() const;

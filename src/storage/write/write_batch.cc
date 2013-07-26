@@ -1,17 +1,17 @@
-#include "storage/write/write_buffer.h"
+#include "storage/write/write_batch.h"
 
 namespace GraphDB {
 
-WriteBuffer::~WriteBuffer() { }
+WriteBatch::~WriteBatch() { }
 
-void WriteBuffer::commit(StorageFacade& storage,
+void WriteBatch::commit(StorageFacade& storage,
                          EdgeStreamDistributor& stream) {
 	storage.commitBatch(this->batch_);
 	stream.publish(this->event_queue_);
 }
 
 template <class Key>
-void WriteBuffer::set(const Key& id, const PropertyValue& value) {
+void WriteBatch::set(const Key& id, const PropertyValue& value) {
 	BufferGuard valueBuffer(value.record.ByteSize());
 	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
 
@@ -26,7 +26,7 @@ void WriteBuffer::set(const Key& id, const PropertyValue& value) {
 }
 
 template <class Key>
-void WriteBuffer::set(const Key& id) {
+void WriteBatch::set(const Key& id) {
 	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
 
 	this->batch_.Put(
@@ -37,7 +37,7 @@ void WriteBuffer::set(const Key& id) {
 }
 
 template <class Key>
-void WriteBuffer::remove(const Key& id) {
+void WriteBatch::remove(const Key& id) {
 	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
 
 	this->batch_.Delete(
@@ -48,4 +48,4 @@ void WriteBuffer::remove(const Key& id) {
 
 }
 
-#include "storage/write/write_buffer.tmpl"
+#include "storage/write/write_batch.tmpl"

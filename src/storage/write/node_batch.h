@@ -1,16 +1,16 @@
-#ifndef GRAPHDB_SRC_WRITE_NODE_BUFFER_H_
-#define GRAPHDB_SRC_WRITE_NODE_BUFFER_H_
+#ifndef GRAPHDB_SRC_WRITE_NODE_BATCH_H_
+#define GRAPHDB_SRC_WRITE_NODE_BATCH_H_
 
 #include "basic_iterator.h"
-#include "storage/write/write_buffer.h"
+#include "storage/write/write_batch.h"
 
 namespace GraphDB {
 
-class NodeBuffer : public WriteBuffer {
+class NodeBatch : public WriteBatch {
 	public:
-		typedef std::unique_ptr<NodeBuffer> Ptr;
+		typedef std::unique_ptr<NodeBatch> Ptr;
 
-		NodeBuffer(BasicIterator* const);
+		NodeBatch(BasicIterator* const);
 
 		uint32_t getCurrent();
 
@@ -30,4 +30,4 @@ class NodeBuffer : public WriteBuffer {
 
 }
 
-#endif  // GRAPHDB_SRC_WRITE_NODE_BUFFER_H_
+#endif  // GRAPHDB_SRC_WRITE_NODE_BATCH_H_

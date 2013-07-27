@@ -38,7 +38,6 @@ bool LogicIterator::jumpTo(uint32_t id) {
 	                  i->jumpTo(id); 
 	              });
 
-
 	if ( this->is_initialized_ ) {
 		this->has_next_ = this->iteratorsHaveNext();
 

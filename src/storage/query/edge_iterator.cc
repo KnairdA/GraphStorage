@@ -29,12 +29,25 @@ bool EdgeIterator::hasNext() {
 }
 
 bool EdgeIterator::jumpTo(uint32_t id) {
+	uint32_t oldId   = this->edge_.toId;
 	this->edge_.toId = id;
 
-	this->cursor_->jump(this->edge_);
+	if ( this->cursor_->jump(this->edge_) ) {
+		this->has_next_  = this->cursor_->hasNext();
+		this->edge_.toId = this->cursor_->getCurrent().toId;
+	} else {
+		CursorKey edge(this->cursor_->getCurrent());
 
-	this->has_next_  = this->cursor_->hasNext();
-	this->edge_.toId = this->cursor_->getCurrent().toId;
+		if ( edge.fromId    == this->edge_.fromId &&
+		     edge.typeId    == this->edge_.typeId &&
+		     edge.direction == this->edge_.direction ) {
+			this->has_next_  = this->cursor_->hasNext();
+			this->edge_.toId = this->cursor_->getCurrent().toId;
+		} else {
+			this->has_next_  = false;
+			this->edge_.toId = oldId;
+		}
+	}
 
 	return this->edge_.toId == id;
 }

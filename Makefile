@@ -1,6 +1,5 @@
 CXX      = g++
 CXXFLAGS = -g -W -Wall -Wextra -pedantic -std=c++11 -fpic -Isrc
-LDLIBS   = -lleveldb -lprotobuf -ltcmalloc
 
 SRC_DIR                 = src
 STORAGE_DIR             = $(SRC_DIR)/storage
@@ -53,12 +52,12 @@ OBJ = $(subst .cc,.o,$(SRC))
 all: dev
 
 dev: $(OBJ)
-	$(CXX) -shared -o libGraphStorage.so $(OBJ) $(CXXFLAGS) $(LDLIBS)
+	$(CXX) -shared -o libGraphStorage.so $(OBJ) $(CXXFLAGS) 
 
 depend: .depend
 
 .depend: $(SRC)
-	$(CXX) -M $(CXXFLAGS) $(LDLIBS) $< > $@
+	$(CXX) -M $(CXXFLAGS) $< > $@
 
 clean:
 	rm -f $(OBJ)

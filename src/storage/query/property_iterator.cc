@@ -27,12 +27,23 @@ bool PropertyIterator::hasNext() {
 }
 
 bool PropertyIterator::jumpTo(uint32_t id) {
+	uint32_t oldId = this->property_.nodeId;
 	this->property_.nodeId = id;
 
-	this->cursor_->jump(this->property_);
+	if ( this->cursor_->jump(this->property_) ) {
+		this->has_next_        = this->cursor_->hasNext();
+		this->property_.nodeId = this->cursor_->getCurrent().nodeId;
+	} else {
+		CursorKey property(this->cursor_->getCurrent());
 
-	this->has_next_  = this->cursor_->hasNext();
-	this->property_.nodeId = this->cursor_->getCurrent().nodeId;
+		if ( property.propertyId == this->property_.propertyId ) {
+			this->has_next_  = this->cursor_->hasNext();
+			this->property_.nodeId = this->cursor_->getCurrent().nodeId;
+		} else {
+			this->has_next_        = false;
+			this->property_.nodeId = oldId;
+		}
+	}
 
 	return this->property_.nodeId == id;
 }

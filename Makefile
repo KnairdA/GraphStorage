@@ -29,8 +29,7 @@ STORAGE_WRITE_SRC       = $(STORAGE_WRITE_DIR)/write_batch.cc \
                           $(STORAGE_WRITE_DIR)/node_batch.cc 
 QUERY_SRC               = $(QUERY_DIR)/logic_iterator.cc \
                           $(QUERY_DIR)/dummy_iterator.cc \
-                          $(QUERY_DIR)/logic_subscription.cc \
-                          $(QUERY_DIR)/edge_subscription_printer.cc
+                          $(QUERY_DIR)/logic_subscription.cc
 QUERY_LOGIC_SRC         = $(QUERY_LOGIC_DIR)/logic_and_iterator.cc \
                           $(QUERY_LOGIC_DIR)/logic_or_iterator.cc \
                           $(QUERY_LOGIC_DIR)/logic_xor_iterator.cc \
@@ -49,10 +48,13 @@ SRC = $(STORAGE_SRC) \
 
 OBJ = $(subst .cc,.o,$(SRC))
 
-all: dev
+all: libGraphStorage.so
 
-dev: $(OBJ)
+libGraphStorage.so: $(OBJ)
 	$(CXX) -shared -o libGraphStorage.so $(OBJ) $(CXXFLAGS) 
+
+install: all
+	install -m 0755 libGraphStorage.so /usr/lib
 
 depend: .depend
 

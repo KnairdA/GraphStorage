@@ -23,7 +23,7 @@ bool LogicAndIterator::iteratorsCheckCommon() {
 
 		return true;
 	} else {
-		if ( this->iterators_move_count_ > 2 ) {
+		if ( this->iterators_move_count_ > 10 ) {
 			uint32_t maxId = (*this->iteratorsGetMax())->getCurrent();
 
 			std::for_each(this->iterators_.begin(),

@@ -71,6 +71,12 @@ class internal_iterator_exception: public query_internal_exception {
 	}
 };
 
+class buffer_size_exception : public std::exception {
+	virtual const char* what() const throw() {
+		return "buffer_size";
+	}
+};
+
 }
 
 #endif  // GRAPHDB_EXCEPTIONS_H_

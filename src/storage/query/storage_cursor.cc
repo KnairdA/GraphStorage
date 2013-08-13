@@ -2,12 +2,14 @@
 #include "exceptions.h"
 
 #include "storage/buffer_utils.h"
+#include "storage/id/identifier_id.h"
 
 namespace GraphDB {
 
 template <typename Key>
 StorageCursor<Key>::StorageCursor(std::unique_ptr<leveldb::Iterator> cur):
-	cursor_(std::move(cur)) {
+	cursor_(std::move(cur)),
+	key_buffer_(Key::Size) {
 	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
 		this->has_next_ = Key::fromBuffer(
 			this->curr_key_,
@@ -54,7 +56,28 @@ void StorageCursor<Key>::getCurrentValue(PropertyValue& value) {
 
 template <typename Key>
 bool StorageCursor<Key>::jumpApproximately(const Key& id) {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	Key::toBuffer(id, this->key_buffer_);
+
+	this->cursor_->Seek(
+		leveldb::Slice(reinterpret_cast<char*>(this->key_buffer_.data),
+		               this->key_buffer_.size)
+	);
+
+	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
+		this->has_next_ = Key::fromBuffer(
+			this->curr_key_,
+			reinterpret_cast<const void*>(this->cursor_->key().data())
+		);
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+template <>
+bool StorageCursor<IdentifierId>::jumpApproximately(const IdentifierId& id) {
+	BufferGuard::Ptr keyBuffer(IdentifierId::toBuffer(id));
 
 	this->cursor_->Seek(
 		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
@@ -62,7 +85,7 @@ bool StorageCursor<Key>::jumpApproximately(const Key& id) {
 	);
 
 	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
-		this->has_next_ = Key::fromBuffer(
+		this->has_next_ = IdentifierId::fromBuffer(
 			this->curr_key_,
 			reinterpret_cast<const void*>(this->cursor_->key().data())
 		);

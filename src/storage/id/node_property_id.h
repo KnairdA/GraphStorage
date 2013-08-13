@@ -11,6 +11,7 @@ namespace GraphDB {
 
 struct NodePropertyId {
 	static BufferGuard::Ptr toBuffer(const NodePropertyId&);
+	static void toBuffer(const NodePropertyId&, BufferGuard&);
 	static bool fromBuffer(NodePropertyId&, const void* keyBuffer);
 
 	NodePropertyId();

@@ -37,7 +37,7 @@ bool PropertyIterator::jumpTo(uint32_t id) {
 		CursorKey property(this->cursor_->getCurrent());
 
 		if ( property.propertyId == this->property_.propertyId ) {
-			this->has_next_  = this->cursor_->hasNext();
+			this->has_next_        = this->cursor_->hasNext();
 			this->property_.nodeId = this->cursor_->getCurrent().nodeId;
 		} else {
 			this->has_next_        = false;

@@ -6,6 +6,7 @@
 #include "leveldb/db.h"
 
 #include "storage/property_value.h"
+#include "storage/buffer_utils.h"
 #include "storage/protobuf/storage_record.pb.h"
 
 namespace GraphDB {
@@ -30,6 +31,7 @@ class StorageCursor {
 		void step();
 
 		std::unique_ptr<leveldb::Iterator> cursor_;
+		BufferGuard key_buffer_;
 		Key curr_key_;
 		bool has_next_;
 

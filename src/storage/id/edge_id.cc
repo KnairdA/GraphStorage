@@ -25,6 +25,28 @@ BufferGuard::Ptr EdgeId::toBuffer(const EdgeId& id) {
 	return keyBuffer;
 }
 
+void EdgeId::toBuffer(const EdgeId& id, BufferGuard& keyBuffer) {
+	if ( keyBuffer.size == EdgeId::Size ) {
+		writeNumber<uint8_t>(
+			reinterpret_cast<uint8_t*>(keyBuffer.data)+0, EdgeId::Section
+		);
+		writeNumber<uint32_t>(
+			reinterpret_cast<uint8_t*>(keyBuffer.data)+1, id.fromId
+		);
+		writeNumber<uint16_t>(
+			reinterpret_cast<uint8_t*>(keyBuffer.data)+5, id.typeId
+		);
+		writeNumber<uint8_t>(
+			reinterpret_cast<uint8_t*>(keyBuffer.data)+7, id.direction
+		);
+		writeNumber<uint32_t>(
+			reinterpret_cast<uint8_t*>(keyBuffer.data)+8, id.toId
+		);
+	} else {
+		throw buffer_size_exception();
+	}
+}
+
 inline static bool checkStorageSection(const void* keyBuffer) {
 	return (EdgeId::Section == readNumber<uint8_t>(
 		reinterpret_cast<const uint8_t*>(keyBuffer)+0

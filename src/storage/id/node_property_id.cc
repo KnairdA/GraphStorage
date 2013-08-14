@@ -3,37 +3,17 @@
 
 namespace GraphDB {
 
-BufferGuard::Ptr NodePropertyId::toBuffer(const NodePropertyId& id) {
-	BufferGuard::Ptr keyBuffer(new BufferGuard(NodePropertyId::Size));
-
+void NodePropertyId::toBuffer(const NodePropertyId& id,
+                              BufferGuard<NodePropertyId>& keyBuffer) {
 	writeNumber<uint8_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+0, NodePropertyId::Section
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+0, NodePropertyId::Section
 	);
 	writeNumber<uint16_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+1, id.propertyId
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+1, id.propertyId
 	);
 	writeNumber<uint32_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+3, id.nodeId
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+3, id.nodeId
 	);
-
-	return keyBuffer;
-}
-
-void NodePropertyId::toBuffer(const NodePropertyId& id,
-                              BufferGuard& keyBuffer) {
-	if ( keyBuffer.size == NodePropertyId::Size ) {
-		writeNumber<uint8_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+0, NodePropertyId::Section
-		);
-		writeNumber<uint16_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+1, id.propertyId
-		);
-		writeNumber<uint32_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+3, id.nodeId
-		);
-	} else {
-		throw buffer_size_exception();
-	}
 }
 
 inline static bool checkStorageSection(const void* keyBuffer) {

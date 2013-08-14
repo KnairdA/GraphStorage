@@ -31,7 +31,7 @@ class StorageCursor {
 		void step();
 
 		std::unique_ptr<leveldb::Iterator> cursor_;
-		BufferGuard key_buffer_;
+		BufferGuard<Key> key_buffer_;
 		Key curr_key_;
 		bool has_next_;
 

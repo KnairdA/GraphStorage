@@ -6,19 +6,10 @@
 #include <cstdlib>
 #include <memory>
 
+#include "exceptions.h"
 #include "storage_guard.h"
 
 namespace GraphDB {
-
-struct BufferGuard {
-	typedef std::unique_ptr<BufferGuard> Ptr;
-
-	BufferGuard(size_t);
-	~BufferGuard();
-
-	void* const data;
-	const size_t size; 
-};
 
 template <typename Key>
 void writeNumber(void*, Key);
@@ -28,6 +19,34 @@ Key readNumber(const void*);
 
 void writeString(void*, std::string);
 std::string readString(const void*);
+
+struct NullBuffer {
+	static const size_t Size = 0;
+};
+
+template <typename Key>
+struct BufferGuard {
+	typedef typename std::unique_ptr<BufferGuard<Key>> Ptr;
+
+	BufferGuard():
+		data(std::malloc(Key::Size)),
+		size(Key::Size) { }
+
+	~BufferGuard() {
+		std::free(data);
+	}
+
+	void resize(size_t newSize) {
+		if ( newSize < Key::Size ) {
+			throw buffer_size_exception();
+		} else {
+			data = std::realloc(data, newSize);
+		}
+	}
+
+	void* data;
+	const size_t size; 
+};
 
 }
 

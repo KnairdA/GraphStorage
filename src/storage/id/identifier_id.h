@@ -10,7 +10,7 @@
 namespace GraphDB {
 
 struct IdentifierId {
-	static BufferGuard::Ptr toBuffer(const IdentifierId&);
+	static void toBuffer(const IdentifierId&, BufferGuard<IdentifierId>&);
 	static bool fromBuffer(IdentifierId&, const void* keyBuffer);
 
 	IdentifierId();

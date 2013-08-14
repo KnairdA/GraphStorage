@@ -3,22 +3,19 @@
 
 namespace GraphDB {
 
-BufferGuard::Ptr IdentifierId::toBuffer(const IdentifierId& id) {
-	BufferGuard::Ptr keyBuffer(
-		new BufferGuard(IdentifierId::Size + id.name.length() + 1)
-	);
+void IdentifierId::toBuffer(const IdentifierId& id,
+                            BufferGuard<IdentifierId>& keyBuffer) {
+	keyBuffer.resize(IdentifierId::Size + id.name.length() + 1);
 
 	writeNumber<uint8_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+0, IdentifierId::Section
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+0, IdentifierId::Section
 	);
 	writeNumber<uint8_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+1, id.type
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+1, id.type
 	);
 	writeString(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+2, id.name
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+2, id.name
 	);
-
-	return keyBuffer;
 }
 
 inline static bool checkStorageSection(const void* keyBuffer) {

@@ -26,10 +26,11 @@ void StorageFacade::commitBatch(leveldb::WriteBatch& buffer) {
 
 template <class Key>
 bool StorageFacade::get(const Key& id, PropertyValue& target) const {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	BufferGuard<Key> keyBuffer;
+	Key::toBuffer(id, keyBuffer);
 
-	leveldb::Slice key(reinterpret_cast<char*>(keyBuffer->data),
-	                   keyBuffer->size);
+	leveldb::Slice key(reinterpret_cast<char*>(keyBuffer.data),
+	                   keyBuffer.size);
 	std::string value;
 
 	if ( !this->db_->Get(leveldb::ReadOptions(), key, &value).IsNotFound() ) {
@@ -45,10 +46,11 @@ bool StorageFacade::get(const Key& id, PropertyValue& target) const {
 
 template <class Key>
 bool StorageFacade::check(const Key& id) const {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	BufferGuard<Key> keyBuffer;
+	Key::toBuffer(id, keyBuffer);
 
-	leveldb::Slice key(reinterpret_cast<char*>(keyBuffer->data),
-	                   keyBuffer->size);
+	leveldb::Slice key(reinterpret_cast<char*>(keyBuffer.data),
+	                   keyBuffer.size);
 	std::string value;
 
 	return !this->db_->Get(leveldb::ReadOptions(), key, &value).IsNotFound();
@@ -58,13 +60,14 @@ template <class Key> typename
 std::unique_ptr<leveldb::Iterator> StorageFacade::getInternalCursor(
 	const Key& id,
 	const leveldb::ReadOptions& options) const {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	BufferGuard<Key> keyBuffer;
+	Key::toBuffer(id, keyBuffer);
 
 	std::unique_ptr<leveldb::Iterator> cursor(this->db_->NewIterator(options));
 
 	cursor->Seek(
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size)
+		leveldb::Slice(reinterpret_cast<char*>(keyBuffer.data),
+		               keyBuffer.size)
 	);
 
 	if ( cursor->status().ok() && cursor->Valid() ) {

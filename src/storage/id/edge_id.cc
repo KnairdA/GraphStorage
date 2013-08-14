@@ -3,48 +3,22 @@
 
 namespace GraphDB {
 
-BufferGuard::Ptr EdgeId::toBuffer(const EdgeId& id) {
-	BufferGuard::Ptr keyBuffer(new BufferGuard(EdgeId::Size));
-
+void EdgeId::toBuffer(const EdgeId& id, BufferGuard<EdgeId>& keyBuffer) {
 	writeNumber<uint8_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+0, EdgeId::Section
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+0, EdgeId::Section
 	);
 	writeNumber<uint32_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+1, id.fromId
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+1, id.fromId
 	);
 	writeNumber<uint16_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+5, id.typeId
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+5, id.typeId
 	);
 	writeNumber<uint8_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+7, id.direction
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+7, id.direction
 	);
 	writeNumber<uint32_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer->data)+8, id.toId
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+8, id.toId
 	);
-
-	return keyBuffer;
-}
-
-void EdgeId::toBuffer(const EdgeId& id, BufferGuard& keyBuffer) {
-	if ( keyBuffer.size == EdgeId::Size ) {
-		writeNumber<uint8_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+0, EdgeId::Section
-		);
-		writeNumber<uint32_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+1, id.fromId
-		);
-		writeNumber<uint16_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+5, id.typeId
-		);
-		writeNumber<uint8_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+7, id.direction
-		);
-		writeNumber<uint32_t>(
-			reinterpret_cast<uint8_t*>(keyBuffer.data)+8, id.toId
-		);
-	} else {
-		throw buffer_size_exception();
-	}
 }
 
 inline static bool checkStorageSection(const void* keyBuffer) {

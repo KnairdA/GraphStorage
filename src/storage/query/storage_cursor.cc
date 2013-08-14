@@ -9,7 +9,7 @@ namespace GraphDB {
 template <typename Key>
 StorageCursor<Key>::StorageCursor(std::unique_ptr<leveldb::Iterator> cur):
 	cursor_(std::move(cur)),
-	key_buffer_(Key::Size) {
+	key_buffer_() {
 	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
 		this->has_next_ = Key::fromBuffer(
 			this->curr_key_,
@@ -65,27 +65,6 @@ bool StorageCursor<Key>::jumpApproximately(const Key& id) {
 
 	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
 		this->has_next_ = Key::fromBuffer(
-			this->curr_key_,
-			reinterpret_cast<const void*>(this->cursor_->key().data())
-		);
-
-		return true;
-	} else {
-		return false;
-	}
-}
-
-template <>
-bool StorageCursor<IdentifierId>::jumpApproximately(const IdentifierId& id) {
-	BufferGuard::Ptr keyBuffer(IdentifierId::toBuffer(id));
-
-	this->cursor_->Seek(
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size)
-	);
-
-	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
-		this->has_next_ = IdentifierId::fromBuffer(
 			this->curr_key_,
 			reinterpret_cast<const void*>(this->cursor_->key().data())
 		);

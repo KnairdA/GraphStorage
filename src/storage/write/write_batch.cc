@@ -12,14 +12,17 @@ void WriteBatch::commit(StorageFacade& storage,
 
 template <class Key>
 void WriteBatch::set(const Key& id, const PropertyValue& value) {
-	BufferGuard valueBuffer(value.record.ByteSize());
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	BufferGuard<NullBuffer> valueBuffer;
+	valueBuffer.resize(value.record.ByteSize());
+
+	BufferGuard<Key> keyBuffer;
+	Key::toBuffer(id, keyBuffer);
 
 	value.record.SerializeToArray(valueBuffer.data, valueBuffer.size);
 
 	this->batch_.Put(
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size),
+		leveldb::Slice(reinterpret_cast<char*>(keyBuffer.data),
+		               keyBuffer.size),
 		leveldb::Slice(reinterpret_cast<char*>(valueBuffer.data),
 		               valueBuffer.size)
 	);
@@ -27,22 +30,24 @@ void WriteBatch::set(const Key& id, const PropertyValue& value) {
 
 template <class Key>
 void WriteBatch::set(const Key& id) {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	BufferGuard<Key> keyBuffer;
+	Key::toBuffer(id, keyBuffer);
 
 	this->batch_.Put(
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size),
+		leveldb::Slice(reinterpret_cast<char*>(keyBuffer.data),
+		               keyBuffer.size),
 		leveldb::Slice()
 	);
 }
 
 template <class Key>
 void WriteBatch::remove(const Key& id) {
-	BufferGuard::Ptr keyBuffer(Key::toBuffer(id));
+	BufferGuard<Key> keyBuffer;
+	Key::toBuffer(id, keyBuffer);
 
 	this->batch_.Delete(
-		leveldb::Slice(reinterpret_cast<char*>(keyBuffer->data),
-		               keyBuffer->size)
+		leveldb::Slice(reinterpret_cast<char*>(keyBuffer.data),
+		               keyBuffer.size)
 	);
 }
 

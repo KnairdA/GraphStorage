@@ -4,14 +4,6 @@
 
 namespace GraphDB {
 
-BufferGuard::BufferGuard(size_t Size):
-	data(std::malloc(Size)),
-	size(Size) { }
-
-BufferGuard::~BufferGuard() {
-	std::free(this->data);
-}
-
 template <>
 void writeNumber<uint64_t>(void* buffer, uint64_t number) {
 	number = htobe64(number);

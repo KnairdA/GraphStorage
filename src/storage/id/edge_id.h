@@ -10,8 +10,7 @@
 namespace GraphDB {
 
 struct EdgeId {
-	static BufferGuard::Ptr toBuffer(const EdgeId&);
-	static void toBuffer(const EdgeId&, BufferGuard&);
+	static void toBuffer(const EdgeId&, BufferGuard<EdgeId>&);
 	static bool fromBuffer(EdgeId&, const void*);
 
 	EdgeId();

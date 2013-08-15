@@ -11,7 +11,7 @@
 
 namespace GraphDB {
 
-template <typename Key>
+template <class Key>
 class StorageCursor {
 	public:
 		typedef typename std::unique_ptr<StorageCursor<Key>> Ptr;

@@ -11,10 +11,10 @@
 
 namespace GraphDB {
 
-template <typename Key>
+template <class Key>
 void writeNumber(void*, Key);
 
-template <typename Key>
+template <class Key>
 Key readNumber(const void*);
 
 void writeString(void*, std::string);
@@ -24,7 +24,7 @@ struct NullBuffer {
 	static const size_t Size = 0;
 };
 
-template <typename Key>
+template <class Key>
 struct BufferGuard {
 	typedef typename std::unique_ptr<BufferGuard<Key>> Ptr;
 

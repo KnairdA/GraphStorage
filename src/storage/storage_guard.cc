@@ -33,6 +33,7 @@ StorageGuard::StorageGuard(const std::string& path, leveldb::Options options):
 StorageGuard::~StorageGuard() {
 	delete this->db_;
 	delete this->db_options_.block_cache;
+	delete this->db_options_.filter_policy;
 }
 
 leveldb::DB* StorageGuard::getDb() const {

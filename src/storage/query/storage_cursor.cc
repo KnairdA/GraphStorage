@@ -6,7 +6,7 @@
 
 namespace GraphDB {
 
-template <typename Key>
+template <class Key>
 StorageCursor<Key>::StorageCursor(std::unique_ptr<leveldb::Iterator> cur):
 	cursor_(std::move(cur)),
 	key_buffer_() {
@@ -20,7 +20,7 @@ StorageCursor<Key>::StorageCursor(std::unique_ptr<leveldb::Iterator> cur):
 	}
 }
 
-template <typename Key>
+template <class Key>
 bool StorageCursor<Key>::jump(const Key& id) {
 	if ( this->jumpApproximately(id) ) {
 		return this->curr_key_ == id;
@@ -29,24 +29,24 @@ bool StorageCursor<Key>::jump(const Key& id) {
 	}
 }
 
-template <typename Key>
+template <class Key>
 Key StorageCursor<Key>::getCurrent() {
 	return this->curr_key_;
 }
 
-template <typename Key>
+template <class Key>
 Key StorageCursor<Key>::getNext() {
 	this->step();
 
 	return this->curr_key_;
 }
 
-template <typename Key>
+template <class Key>
 bool StorageCursor<Key>::hasNext() {
 	return this->has_next_;
 }
 
-template <typename Key>
+template <class Key>
 void StorageCursor<Key>::getCurrentValue(PropertyValue& value) {
 	value.record.ParseFromArray(
 		reinterpret_cast<const void*>(this->cursor_->value().data()),
@@ -54,7 +54,7 @@ void StorageCursor<Key>::getCurrentValue(PropertyValue& value) {
 	);
 }
 
-template <typename Key>
+template <class Key>
 bool StorageCursor<Key>::jumpApproximately(const Key& id) {
 	Key::toBuffer(id, this->key_buffer_);
 
@@ -75,7 +75,7 @@ bool StorageCursor<Key>::jumpApproximately(const Key& id) {
 	}
 }
 
-template <typename Key>
+template <class Key>
 void StorageCursor<Key>::step() {
 	this->cursor_->Next();
 

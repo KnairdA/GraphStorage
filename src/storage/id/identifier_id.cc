@@ -39,6 +39,11 @@ bool IdentifierId::fromBuffer(IdentifierId& id, const void* keyBuffer) {
 	}
 }
 
+bool IdentifierId::equalArea(const IdentifierId& id1,
+                             const IdentifierId& id2) {
+	return id1.type == id2.type;
+}
+
 IdentifierId::IdentifierId() { }
 
 IdentifierId::IdentifierId(IdentifierType itype, std::string iname):

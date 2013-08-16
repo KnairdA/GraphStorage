@@ -9,7 +9,7 @@ EdgeIterator::EdgeIterator(const StorageFacade* storage,
                            uint16_t typeId,
                            EdgeDirection direction):
 	edge_(fromId, typeId, direction, 0),
-	cursor_(storage->getCursor<CursorKey>(edge_, state)),
+	cursor_(storage->getCursor<EdgeId>(edge_, state)),
 	has_next_(cursor_->hasNext()) {
 	this->edge_.toId = this->cursor_->getCurrent().toId;
 }
@@ -34,13 +34,9 @@ bool EdgeIterator::jumpTo(uint32_t id) {
 
 	if ( this->cursor_->jump(this->edge_) ) {
 		this->has_next_  = this->cursor_->hasNext();
-		this->edge_.toId = this->cursor_->getCurrent().toId;
 	} else {
-		CursorKey edge(this->cursor_->getCurrent());
-
-		if ( edge.fromId    == this->edge_.fromId &&
-		     edge.typeId    == this->edge_.typeId &&
-		     edge.direction == this->edge_.direction ) {
+		if ( EdgeId::equalArea(this->cursor_->getCurrent(),
+		                       this->edge_) ) {
 			this->has_next_  = this->cursor_->hasNext();
 			this->edge_.toId = this->cursor_->getCurrent().toId;
 		} else {
@@ -55,13 +51,10 @@ bool EdgeIterator::jumpTo(uint32_t id) {
 void EdgeIterator::step() {
 	if ( this->has_next_ ) {
 		if ( this->cursor_->hasNext() ) {
-			CursorKey edge  = this->cursor_->getNext();
-			this->has_next_ = this->cursor_->hasNext();
-
-			if ( edge.fromId    == this->edge_.fromId &&
-			     edge.typeId    == this->edge_.typeId &&
-			     edge.direction == this->edge_.direction ) {
-				this->edge_.toId = edge.toId;
+			if ( EdgeId::equalArea(this->cursor_->getNext(),
+			                       this->edge_) ) {
+				this->has_next_  = this->cursor_->hasNext();
+				this->edge_.toId = this->cursor_->getCurrent().toId;
 			} else {
 				this->has_next_ = false;
 			}

@@ -48,6 +48,12 @@ bool EdgeId::fromBuffer(EdgeId& id, const void* keyBuffer) {
 	}
 }
 
+bool EdgeId::equalArea(const EdgeId& id1, const EdgeId& id2) {
+	return id1.fromId    == id2.fromId &&
+	       id1.typeId    == id2.typeId &&
+	       id1.direction == id2.direction;
+}
+
 EdgeId::EdgeId() { }
 
 EdgeId::EdgeId(uint32_t from,

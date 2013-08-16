@@ -41,11 +41,12 @@ struct BufferGuard {
 			throw buffer_size_exception();
 		} else {
 			data = std::realloc(data, newSize);
+			size = newSize;
 		}
 	}
 
 	void* data;
-	const size_t size; 
+	size_t size; 
 };
 
 }

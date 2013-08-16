@@ -37,6 +37,11 @@ bool NodePropertyId::fromBuffer(NodePropertyId& id, const void* keyBuffer) {
 	}
 }
 
+bool NodePropertyId::equalArea(const NodePropertyId& id1,
+                               const NodePropertyId& id2) {
+	return id1.propertyId == id2.propertyId;
+}
+
 NodePropertyId::NodePropertyId() { }
 
 NodePropertyId::NodePropertyId(uint32_t node, uint16_t property):

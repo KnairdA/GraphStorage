@@ -9,8 +9,6 @@ namespace GraphDB {
 
 class EdgeIterator : public BasicIterator {
 	public:
-		typedef EdgeId CursorKey;
-
 		EdgeIterator(const StorageFacade*,
 		             const QueryState*,
 		             uint32_t,
@@ -25,8 +23,8 @@ class EdgeIterator : public BasicIterator {
 	private:
 		void step();
 
-		CursorKey edge_;
-		StorageCursor<CursorKey>::Ptr cursor_;
+		EdgeId edge_;
+		StorageCursor<EdgeId>::Ptr cursor_;
 		bool has_next_;
 
 };

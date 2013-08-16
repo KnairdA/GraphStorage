@@ -12,6 +12,7 @@ namespace GraphDB {
 struct IdentifierId {
 	static void toBuffer(const IdentifierId&, BufferGuard<IdentifierId>&);
 	static bool fromBuffer(IdentifierId&, const void* keyBuffer);
+	static bool equalArea(const IdentifierId&, const IdentifierId&);
 
 	IdentifierId();
 	IdentifierId(IdentifierType, std::string);

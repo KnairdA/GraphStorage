@@ -12,6 +12,7 @@ namespace GraphDB {
 struct NodePropertyId {
 	static void toBuffer(const NodePropertyId&, BufferGuard<NodePropertyId>&);
 	static bool fromBuffer(NodePropertyId&, const void* keyBuffer);
+	static bool equalArea(const NodePropertyId&, const NodePropertyId&);
 
 	NodePropertyId();
 	NodePropertyId(uint32_t, uint16_t);

@@ -7,7 +7,7 @@ PropertyIterator::PropertyIterator(const StorageFacade* storage,
                                    const QueryState* state,
                                    uint16_t propertyId):
 	property_(0, propertyId),
-	cursor_(storage->getCursor<CursorKey>(property_, state)),
+	cursor_(storage->getCursor<NodePropertyId>(property_, state)),
 	has_next_(cursor_->hasNext()) {
 	this->property_.nodeId = this->cursor_->getCurrent().nodeId;
 }
@@ -31,12 +31,10 @@ bool PropertyIterator::jumpTo(uint32_t id) {
 	this->property_.nodeId = id;
 
 	if ( this->cursor_->jump(this->property_) ) {
-		this->has_next_        = this->cursor_->hasNext();
-		this->property_.nodeId = this->cursor_->getCurrent().nodeId;
+		this->has_next_ = this->cursor_->hasNext();
 	} else {
-		CursorKey property(this->cursor_->getCurrent());
-
-		if ( property.propertyId == this->property_.propertyId ) {
+		if ( NodePropertyId::equalArea(this->cursor_->getCurrent(),
+		                               this->property_) ) {
 			this->has_next_        = this->cursor_->hasNext();
 			this->property_.nodeId = this->cursor_->getCurrent().nodeId;
 		} else {
@@ -55,11 +53,10 @@ void PropertyIterator::getCurrentValue(PropertyValue& value) {
 void PropertyIterator::step() {
 	if ( this->has_next_ ) {
 		if ( this->cursor_->hasNext() ) {
-			CursorKey property = this->cursor_->getNext();
-			this->has_next_    = this->cursor_->hasNext();
-
-			if ( property.propertyId == this->property_.propertyId ) {
-				this->property_.nodeId = property.nodeId;
+			if ( NodePropertyId::equalArea(this->cursor_->getNext(),
+			                               this->property_) ) {
+				this->has_next_        = this->cursor_->hasNext();
+				this->property_.nodeId = this->cursor_->getCurrent().nodeId;
 			} else {
 				this->has_next_ = false;
 			}

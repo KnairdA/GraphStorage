@@ -9,8 +9,6 @@ namespace GraphDB {
 
 class PropertyIterator : public BasicIterator {
 	public:
-		typedef NodePropertyId CursorKey;
-
 		PropertyIterator(const StorageFacade*,
 		                 const QueryState*,
 		                 uint16_t);
@@ -25,8 +23,8 @@ class PropertyIterator : public BasicIterator {
 	private:
 		void step();
 
-		CursorKey property_;
-		StorageCursor<CursorKey>::Ptr cursor_;
+		NodePropertyId property_;
+		StorageCursor<NodePropertyId>::Ptr cursor_;
 		bool has_next_;
 
 };

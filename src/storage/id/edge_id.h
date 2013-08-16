@@ -12,6 +12,7 @@ namespace GraphDB {
 struct EdgeId {
 	static void toBuffer(const EdgeId&, BufferGuard<EdgeId>&);
 	static bool fromBuffer(EdgeId&, const void*);
+	static bool equalArea(const EdgeId&, const EdgeId&);
 
 	EdgeId();
 	EdgeId(uint32_t, uint16_t, EdgeDirection, uint32_t);

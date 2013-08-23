@@ -30,7 +30,8 @@ struct EdgeId {
 	uint32_t fromId;
 	uint16_t typeId;
 	EdgeDirection direction;
-	uint32_t toId;
+
+	uint32_t nodeId;
 };
 
 }

@@ -17,7 +17,7 @@ void EdgeId::toBuffer(const EdgeId& id, BufferGuard<EdgeId>& keyBuffer) {
 		reinterpret_cast<uint8_t*>(keyBuffer.data)+7, id.direction
 	);
 	writeNumber<uint32_t>(
-		reinterpret_cast<uint8_t*>(keyBuffer.data)+8, id.toId
+		reinterpret_cast<uint8_t*>(keyBuffer.data)+8, id.nodeId
 	);
 }
 
@@ -38,7 +38,7 @@ bool EdgeId::fromBuffer(EdgeId& id, const void* keyBuffer) {
 		id.direction = static_cast<EdgeDirection>(readNumber<uint8_t>(
 			reinterpret_cast<const uint8_t*>(keyBuffer)+7
 		));
-		id.toId      = readNumber<uint32_t>(
+		id.nodeId    = readNumber<uint32_t>(
 			reinterpret_cast<const uint8_t*>(keyBuffer)+8
 		);
 
@@ -63,7 +63,7 @@ EdgeId::EdgeId(uint32_t from,
 	fromId(from),
 	typeId(type),
 	direction(dir),
-	toId(to) { }
+	nodeId(to) { }
 
 EdgeId::EdgeId(const void* keyBuffer) {
 	if ( EdgeId::fromBuffer(*this, keyBuffer) ) {
@@ -75,7 +75,7 @@ bool EdgeId::operator==(const EdgeId& refId) {
 	return fromId    == refId.fromId    &&
 	       typeId    == refId.typeId    &&
 	       direction == refId.direction &&
-	       toId      == refId.toId;
+	       nodeId    == refId.nodeId;
 }
 
 }

@@ -9,7 +9,6 @@
 #include "storage/storage_facade.h"
 
 #include "storage/write/node_batch.h"
-#include "storage/write/maintenance_batch.h"
 #include "storage/query/edge_stream_distributor.h"
 
 #include "query/logic_iterator.h"

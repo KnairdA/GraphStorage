@@ -1,10 +1,7 @@
 #include "graph_storage.h"
 #include "exceptions.h"
 
-#include "query/logic/logic_or_iterator.h"
-#include "query/logic/logic_xor_iterator.h"
-#include "storage/query/edge_iterator.h"
-#include "query/dummy_iterator.h"
+#include "storage/id/identifier_id.h"
 
 namespace GraphDB {
 

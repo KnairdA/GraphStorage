@@ -54,8 +54,8 @@ bool LogicIterator::jumpTo(uint32_t id) {
 }
 
 std::vector<BasicIterator::Ptr>::iterator LogicIterator::iteratorsGetMin() {
-	auto checkFunc = [](const BasicIterator::Ptr &i1,
-	                    const BasicIterator::Ptr &i2) -> bool {
+	auto checkFunc = [](const BasicIterator::Ptr& i1,
+	                    const BasicIterator::Ptr& i2) -> bool {
 		return i1->getCurrent() < i2->getCurrent();
 	};
 
@@ -105,7 +105,7 @@ void LogicIterator::step() {
 bool LogicIterator::iteratorsHaveNext() {
 	return std::any_of(this->iterators_.begin(),
 	                   this->iterators_.end(),
-	                   [](const BasicIterator::Ptr &i) -> bool {
+	                   [](const BasicIterator::Ptr& i) -> bool {
 	                       return i->hasNext();
 	                   });
 }

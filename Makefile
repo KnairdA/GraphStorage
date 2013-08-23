@@ -19,8 +19,7 @@ STORAGE_SRC             = $(STORAGE_DIR)/storage_guard.cc \
 STORAGE_PROTOBUF_SRC    = $(STORAGE_PROTOBUF_DIR)/storage_record.pb.cc
 STORAGE_QUERY_SRC       = $(STORAGE_QUERY_DIR)/query_state.cc \
                           $(STORAGE_QUERY_DIR)/storage_cursor.cc \
-                          $(STORAGE_QUERY_DIR)/edge_iterator.cc \
-                          $(STORAGE_QUERY_DIR)/property_iterator.cc \
+                          $(STORAGE_QUERY_DIR)/storage_iterator.cc \
                           $(STORAGE_QUERY_DIR)/edge_stream_distributor.cc \
                           $(STORAGE_QUERY_DIR)/edge_stream_pattern.cc \
                           $(STORAGE_QUERY_DIR)/edge_subscription.cc

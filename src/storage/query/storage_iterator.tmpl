@@ -1,0 +1,14 @@
+#ifndef GRAPHDB_SRC_STORAGE_QUERY_STORAGE_ITERATOR_TMPL_
+#define GRAPHDB_SRC_STORAGE_QUERY_STORAGE_ITERATOR_TMPL_
+
+#include "storage/id/edge_id.h"
+#include "storage/id/node_property_id.h"
+
+namespace GraphDB {
+
+template class StorageIterator<EdgeId>;
+template class StorageIterator<NodePropertyId>;
+
+}
+
+#endif  // GRAPHDB_SRC_STORAGE_QUERY_STORAGE_ITERATOR_TMPL_

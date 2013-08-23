@@ -9,7 +9,7 @@ bool LogicAndIterator::iteratorsCheckCommon() {
 
 	uint32_t refId = this->iterators_.front()->getCurrent();
 
-	auto checkFunc = [&refId](const BasicIterator::Ptr &i) -> bool {
+	auto checkFunc = [&refId](const BasicIterator::Ptr& i) -> bool {
 		return i->getCurrent() == refId;
 	};
 
@@ -44,8 +44,8 @@ bool LogicAndIterator::iteratorsCheckCommon() {
 }
 
 std::vector<BasicIterator::Ptr>::iterator LogicAndIterator::iteratorsGetMax() {
-	auto checkFunc = [](const BasicIterator::Ptr &i1,
-	                    const BasicIterator::Ptr &i2) -> bool {
+	auto checkFunc = [](const BasicIterator::Ptr& i1,
+	                    const BasicIterator::Ptr& i2) -> bool {
 		return i1->getCurrent() < i2->getCurrent();
 	};
 

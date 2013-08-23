@@ -3,8 +3,7 @@
 #include "graph_storage.h"
 #include "query/logic/logic_and_iterator.h"
 #include "query/logic/logic_or_iterator.h"
-#include "storage/query/edge_iterator.h"
-#include "storage/query/property_iterator.h"
+#include "storage/query/storage_iterator.h"
 
 int main() {
 	GraphDB::GraphStorage storage("./testdb");
@@ -13,14 +12,25 @@ int main() {
 	GraphDB::PropertyValue value;
 
 	GraphDB::LogicIterator::Ptr andIter = storage.getIterator<GraphDB::LogicAndIterator>(state.get());
-	GraphDB::PropertyIterator* nameIter = andIter->getIterator<GraphDB::PropertyIterator>((uint16_t) 1);
+	GraphDB::PropertyIterator* nameIter = andIter->getIterator<GraphDB::PropertyIterator>(
+		GraphDB::NodePropertyId(1, 0)
+	);
 
-	andIter->getIterator<GraphDB::EdgeIterator>((uint32_t) 0, (uint16_t) 1,  GraphDB::EdgeDirection::Outbound);
-	andIter->getIterator<GraphDB::EdgeIterator>((uint32_t) 3015959, (uint16_t) 4, GraphDB::EdgeDirection::Outbound);
+	andIter->getIterator<GraphDB::EdgeIterator>(
+		GraphDB::EdgeId(0, 1, GraphDB::EdgeDirection::Outbound, 0)
+	);
+	andIter->getIterator<GraphDB::EdgeIterator>(
+		GraphDB::EdgeId(3015959, 4, GraphDB::EdgeDirection::Outbound, 0)
+	);
 
 	GraphDB::LogicIterator* orIter = andIter->getIterator<GraphDB::LogicOrIterator>();
-	orIter->getIterator<GraphDB::EdgeIterator>((uint32_t) 2972042, (uint16_t) 4, GraphDB::EdgeDirection::Outbound);
-	orIter->getIterator<GraphDB::EdgeIterator>((uint32_t) 2984160, (uint16_t) 4, GraphDB::EdgeDirection::Outbound);
+
+	orIter->getIterator<GraphDB::EdgeIterator>(
+		GraphDB::EdgeId(2972042, 4, GraphDB::EdgeDirection::Outbound, 0)
+	);
+	orIter->getIterator<GraphDB::EdgeIterator>(
+		GraphDB::EdgeId(2984160, 4, GraphDB::EdgeDirection::Outbound, 0)
+	);
 
 	while ( andIter->hasNext() ) {
 		nameIter->getCurrentValue(value);

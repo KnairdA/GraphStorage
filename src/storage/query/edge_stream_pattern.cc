@@ -19,7 +19,7 @@ bool EdgeStreamPattern::isMatchingPattern(const EdgeStreamEvent& event) {
 	if ( (this->from_id_set_   && this->edge_.fromId    != event.Edge.fromId)    ||
 	     (this->type_id_set_   && this->edge_.typeId    != event.Edge.typeId)    ||
 	     (this->direction_set_ && this->edge_.direction != event.Edge.direction) ||
-	     (this->to_id_set_     && this->edge_.toId      != event.Edge.toId) ) {
+	     (this->to_id_set_     && this->edge_.nodeId    != event.Edge.nodeId) ) {
 		return false;
 	} else {
 		return true;
@@ -41,8 +41,8 @@ void EdgeStreamPattern::setDirection(EdgeDirection direction) {
 	this->direction_set_  = true;
 }
 
-void EdgeStreamPattern::setToId(uint32_t toId) {
-	this->edge_.toId = toId;
+void EdgeStreamPattern::setToId(uint32_t nodeId) {
+	this->edge_.nodeId = nodeId;
 	this->to_id_set_ = true;
 }
 

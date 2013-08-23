@@ -15,15 +15,15 @@ EdgeSubscription::EdgeSubscription(EdgeStreamDistributor* distributor,
 
 void EdgeSubscription::pushNext(const EdgeStreamEvent& event) {
 	if ( event.Type == INSERT || event.Type == UPDATE ) {
-		this->parent_->pushNext(event.Edge.toId);
+		this->parent_->pushNext(event.Edge.nodeId);
 	}
 }
 
-bool EdgeSubscription::check(uint32_t toId) {
+bool EdgeSubscription::check(uint32_t nodeId) {
 	EdgeId checkId(this->edge_.fromId,
 	               this->edge_.typeId,
 	               this->edge_.direction,
-	               toId);
+	               nodeId);
 
 	return this->storage_->check<EdgeId>(checkId);
 }

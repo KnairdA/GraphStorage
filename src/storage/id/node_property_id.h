@@ -15,7 +15,7 @@ struct NodePropertyId {
 	static bool equalArea(const NodePropertyId&, const NodePropertyId&);
 
 	NodePropertyId();
-	NodePropertyId(uint32_t, uint16_t);
+	NodePropertyId(uint16_t, uint32_t);
 	NodePropertyId(const void* keyBuffer);
 
 	bool operator==(const NodePropertyId&);
@@ -25,8 +25,9 @@ struct NodePropertyId {
 	                           sizeof(uint16_t)       +
 	                           sizeof(uint32_t);
 
-	uint32_t nodeId;
 	uint16_t propertyId;
+
+	uint32_t nodeId;
 
 };
 

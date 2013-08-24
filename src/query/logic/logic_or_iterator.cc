@@ -1,7 +1,6 @@
 #include "query/logic/logic_or_iterator.h"
 
 #include <algorithm>
-#include <vector>
 
 namespace GraphDB {
 

@@ -27,7 +27,6 @@ class StorageCursor {
 		void getCurrentValue(PropertyValue&);
 
 	private:
-		bool jumpApproximately(const Key&);
 		void step();
 
 		std::unique_ptr<leveldb::Iterator> cursor_;

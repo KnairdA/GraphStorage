@@ -22,7 +22,19 @@ StorageCursor<Key>::StorageCursor(std::unique_ptr<leveldb::Iterator> cur):
 
 template <class Key>
 bool StorageCursor<Key>::jump(const Key& id) {
-	if ( this->jumpApproximately(id) ) {
+	Key::toBuffer(id, this->key_buffer_);
+
+	this->cursor_->Seek(
+		leveldb::Slice(reinterpret_cast<char*>(this->key_buffer_.data),
+		               this->key_buffer_.size)
+	);
+
+	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
+		this->has_next_ = Key::fromBuffer(
+			this->curr_key_,
+			reinterpret_cast<const void*>(this->cursor_->key().data())
+		);
+
 		return this->curr_key_ == id;
 	} else {
 		throw storage_record_exception();
@@ -52,27 +64,6 @@ void StorageCursor<Key>::getCurrentValue(PropertyValue& value) {
 		reinterpret_cast<const void*>(this->cursor_->value().data()),
 		this->cursor_->value().size()
 	);
-}
-
-template <class Key>
-bool StorageCursor<Key>::jumpApproximately(const Key& id) {
-	Key::toBuffer(id, this->key_buffer_);
-
-	this->cursor_->Seek(
-		leveldb::Slice(reinterpret_cast<char*>(this->key_buffer_.data),
-		               this->key_buffer_.size)
-	);
-
-	if ( this->cursor_->status().ok() && this->cursor_->Valid() ) {
-		this->has_next_ = Key::fromBuffer(
-			this->curr_key_,
-			reinterpret_cast<const void*>(this->cursor_->key().data())
-		);
-
-		return true;
-	} else {
-		return false;
-	}
 }
 
 template <class Key>

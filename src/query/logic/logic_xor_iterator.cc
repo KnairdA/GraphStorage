@@ -1,7 +1,6 @@
 #include "query/logic/logic_xor_iterator.h"
 
 #include <algorithm>
-#include <vector>
 
 namespace GraphDB {
 

@@ -9,7 +9,7 @@ bool LogicOrIterator::iteratorsCheckCommon() {
 	auto minIter = this->iteratorsGetMin();
 
 	while ( !(*minIter)->hasNext() && this->iterators_.size() > 1 ) {
-		this->done_iterators_.push(std::move(*minIter));
+		this->done_iterators_.emplace_back(std::move(*minIter));
 		this->iterators_.erase(minIter);
 
 		minIter = this->iteratorsGetMin();
@@ -23,12 +23,16 @@ bool LogicOrIterator::iteratorsCheckCommon() {
 	}
 }
 
-void LogicOrIterator::resetInternals() {
-	while ( !this->done_iterators_.empty() ) {
-		this->iterators_.emplace_back(
-			std::move(this->done_iterators_.top())
-		);
-		this->done_iterators_.pop();
+void LogicOrIterator::resetBeforeJump(uint32_t id) {
+	for ( auto iter = this->done_iterators_.begin();
+	      iter != this->done_iterators_.end();
+	      ++iter ) {
+		if ( (*iter)->getCurrent() > id ) {
+			this->iterators_.emplace_back(
+				std::move(*iter)
+			);
+			this->done_iterators_.erase(iter);
+		}
 	}
 }
 

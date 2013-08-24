@@ -29,8 +29,11 @@ bool LogicIterator::hasNext() {
 }
 
 bool LogicIterator::jumpTo(uint32_t id) {
+	if ( this->curr_common_id_ > id ) {
+		this->resetBeforeJump(id);
+	}
+
 	this->curr_common_id_ = 0;
-	this->resetInternals();
 
 	std::for_each(this->iterators_.begin(),
 	              this->iterators_.end(),

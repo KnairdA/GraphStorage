@@ -27,7 +27,7 @@ class LogicIterator : public BasicIterator {
 
 	protected:
 		virtual bool iteratorsCheckCommon() = 0;
-		virtual void resetInternals() { }
+		virtual void resetBeforeJump(uint32_t) { }
 
 		void initialize();
 		std::vector<BasicIterator::Ptr>::iterator iteratorsGetMin();

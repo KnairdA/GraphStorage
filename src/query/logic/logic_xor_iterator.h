@@ -1,7 +1,7 @@
 #ifndef GRAPHDB_SRC_QUERY_LOGIC_XOR_ITERATOR_H_
 #define GRAPHDB_SRC_QUERY_LOGIC_XOR_ITERATOR_H_
 
-#include <stack>
+#include <vector>
 
 #include "query/logic_iterator.h"
 
@@ -13,9 +13,9 @@ class LogicXorIterator : public LogicIterator {
 
 	private:
 		virtual bool iteratorsCheckCommon();
-		virtual void resetInternals();
+		virtual void resetBeforeJump(uint32_t);
 
-		std::stack<BasicIterator::Ptr> done_iterators_;
+		std::vector<BasicIterator::Ptr> done_iterators_;
 		uint32_t visited_id_ = 0;
 };
 

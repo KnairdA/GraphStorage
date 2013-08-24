@@ -9,13 +9,13 @@ bool LogicXorIterator::iteratorsCheckCommon() {
 	auto minIter = this->iteratorsGetMin();
 
 	while ( !(*minIter)->hasNext() && this->iterators_.size() > 1 ) {
-		this->done_iterators_.push(std::move(*minIter));
+		this->done_iterators_.emplace_back(std::move(*minIter));
 		this->iterators_.erase(minIter);
 
 		minIter = this->iteratorsGetMin();
 	}
 
-	uint32_t refId = (*minIter)->getCurrent();
+	uint32_t refId        = (*minIter)->getCurrent();
 	uint32_t oldVisitedId = this->visited_id_;
 
 	auto checkFunc = [&refId](const BasicIterator::Ptr &i) -> bool {
@@ -39,12 +39,16 @@ bool LogicXorIterator::iteratorsCheckCommon() {
 	}
 }
 
-void LogicXorIterator::resetInternals() {
-	while ( !this->done_iterators_.empty() ) {
-		this->iterators_.emplace_back(
-			std::move(this->done_iterators_.top())
-		);
-		this->done_iterators_.pop();
+void LogicXorIterator::resetBeforeJump(uint32_t id) {
+	for ( auto iter = this->done_iterators_.begin();
+	      iter != this->done_iterators_.end();
+	      ++iter ) {
+		if ( (*iter)->getCurrent() > id ) {
+			this->iterators_.emplace_back(
+				std::move(*iter)
+			);
+			this->done_iterators_.erase(iter);
+		}
 	}
 
 	this->visited_id_ = 0;

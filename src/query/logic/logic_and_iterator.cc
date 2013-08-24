@@ -24,13 +24,13 @@ bool LogicAndIterator::iteratorsCheckCommon() {
 		return true;
 	} else {
 		if ( this->iterators_move_count_ > 10 ) {
-			uint32_t maxId = (*this->iteratorsGetMax())->getCurrent();
+			refId = (*this->iteratorsGetMax())->getCurrent();
 
 			std::for_each(this->iterators_.begin(),
 			              this->iterators_.end(),
-			              [&maxId](const BasicIterator::Ptr& i) {
-			                  if ( i->getCurrent() < maxId ) {
-			                      i->jumpTo(maxId); 
+			              [&refId](const BasicIterator::Ptr& i) {
+			                  if ( i->getCurrent() < refId ) {
+			                      i->jumpTo(refId); 
 			                  }
 			              });
 

@@ -15,7 +15,7 @@ class LogicAndIterator : public LogicIterator {
 		virtual bool iteratorsCheckCommon();
 		std::vector<BasicIterator::Ptr>::iterator iteratorsGetMax();
 
-		uint32_t iterators_move_count_ = 0;
+		uint8_t iterators_move_count_ = 0;
 };
 
 }

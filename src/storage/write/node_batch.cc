@@ -38,7 +38,9 @@ void NodeBatch::connectTo(uint32_t toId, uint16_t typeId) {
 	this->set<EdgeId>(edge);
 	this->addEvent(EdgeStreamEventType::INSERT, edge);
 
+	edge.fromId    = toId;
 	edge.direction = EdgeDirection::Inbound;
+	edge.nodeId    = this->getCurrent();
 
 	this->set<EdgeId>(edge);
 	this->addEvent(EdgeStreamEventType::INSERT, edge);
@@ -50,7 +52,9 @@ void NodeBatch::disconnectFrom(uint32_t toId, uint16_t typeId) {
 	this->remove<EdgeId>(edge);
 	this->addEvent(EdgeStreamEventType::REMOVE, edge);
 
+	edge.fromId    = toId;
 	edge.direction = EdgeDirection::Inbound;
+	edge.nodeId    = this->getCurrent();
 
 	this->remove<EdgeId>(edge);
 	this->addEvent(EdgeStreamEventType::REMOVE, edge);

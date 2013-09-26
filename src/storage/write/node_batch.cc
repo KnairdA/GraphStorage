@@ -62,14 +62,14 @@ void NodeBatch::disconnectFrom(uint32_t toId, uint16_t typeId) {
 
 void NodeBatch::setProperty(uint16_t propertyId, const PropertyValue& value) {
 	this->set<NodePropertyId>(
-		NodePropertyId(this->getCurrent(), propertyId),
+		NodePropertyId(propertyId, this->getCurrent()),
 		value
 	);
 }
 
 void NodeBatch::removeProperty(uint16_t propertyId) {
 	this->remove<NodePropertyId>(
-		NodePropertyId(this->getCurrent(), propertyId)
+		NodePropertyId(propertyId, this->getCurrent())
 	);
 }
 

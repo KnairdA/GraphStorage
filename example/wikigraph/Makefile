@@ -1,6 +1,6 @@
 CXX      = g++
 CXXFLAGS = -g -W -Wall -Wextra -pedantic -std=c++11 -I../../src/
-LDLIBS   = -L. -lGraphStorage -lleveldb -lprotobuf -ltcmalloc
+LDLIBS   = -lGraphStorage -lleveldb -lprotobuf -ltcmalloc
 
 IMPORT_SRC = import.cc 
 QUERY_SRC  = query.cc 
@@ -19,7 +19,7 @@ query: $(QUERY_OBJ)
 depend: .depend
 
 .depend: $(IMPORT_SRC) $(QUERY_SRC)
-	$(CXX) -M $(CXXFLAGS) $(LDLIBS) $< > $@
+	$(CXX) -M $(CXXFLAGS) $< > $@
 
 clean:
 	rm -f $(IMPORT_OBJ)

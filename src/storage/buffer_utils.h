@@ -2,8 +2,8 @@
 #define GRAPHDB_SRC_STORAGE_BUFFER_UTILS_H_
 
 #include <cstdint>
-#include <cstring>
 #include <cstdlib>
+#include <cstring>
 #include <memory>
 
 #include "exceptions.h"
@@ -12,12 +12,12 @@
 namespace GraphDB {
 
 template <class Key>
-void writeNumber(void*, Key);
+void writeNumber(void*, const Key&);
 
 template <class Key>
 Key readNumber(const void*);
 
-void writeString(void*, std::string);
+void writeString(void*, const std::string&);
 std::string readString(const void*);
 
 struct NullBuffer {

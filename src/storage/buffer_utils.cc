@@ -5,64 +5,46 @@
 namespace GraphDB {
 
 template <>
-void writeNumber<uint64_t>(void* buffer, uint64_t number) {
-	number = htobe64(number);
-
-	std::memcpy(buffer, &number, sizeof(uint64_t));
+void writeNumber<uint64_t>(void* buffer, const uint64_t& number) {
+	*reinterpret_cast<uint64_t*>(buffer) = htobe64(number);
 }
 
 template <>
-void writeNumber<uint32_t>(void* buffer, uint32_t number) {
-	number = htobe32(number);
-
-	std::memcpy(buffer, &number, sizeof(uint32_t));
+void writeNumber<uint32_t>(void* buffer, const uint32_t& number) {
+	*reinterpret_cast<uint32_t*>(buffer) = htobe32(number);
 }
 
 template <>
-void writeNumber<uint16_t>(void* buffer, uint16_t number) {
-	number = htobe16(number);
-
-	std::memcpy(buffer, &number, sizeof(uint16_t));
+void writeNumber<uint16_t>(void* buffer, const uint16_t& number) {
+	*reinterpret_cast<uint16_t*>(buffer) = htobe16(number);
 }
 
 template <>
-void writeNumber<uint8_t>(void* buffer, uint8_t number) {
-	std::memcpy(buffer, &number, sizeof(uint8_t));
+void writeNumber<uint8_t>(void* buffer, const uint8_t& number) {
+	*reinterpret_cast<uint8_t*>(buffer) = number;
 }
 
 template <>
 uint64_t readNumber<uint64_t>(const void* buffer) {
-	uint64_t number = 0;
-	std::memcpy(&number, buffer, sizeof(uint64_t));
-	
-	return be64toh(number);
+	return be64toh(*reinterpret_cast<const uint64_t*>(buffer));
 }
 
 template <>
 uint32_t readNumber<uint32_t>(const void* buffer) {
-	uint32_t number = 0;
-	std::memcpy(&number, buffer, sizeof(uint32_t));
-	
-	return be32toh(number);
+	return be32toh(*reinterpret_cast<const uint32_t*>(buffer));
 }
 
 template <>
 uint16_t readNumber<uint16_t>(const void* buffer) {
-	uint16_t number = 0;
-	std::memcpy(&number, buffer, sizeof(uint16_t));
-	
-	return be16toh(number);
+	return be16toh(*reinterpret_cast<const uint16_t*>(buffer));
 }
 
 template <>
 uint8_t readNumber<uint8_t>(const void* buffer) {
-	uint8_t number = 0;
-	std::memcpy(&number, buffer, sizeof(uint8_t));
-
-	return number;
+	return *reinterpret_cast<const uint8_t*>(buffer);
 }
 
-void writeString(void* buffer, std::string string) {
+void writeString(void* buffer, const std::string& string) {
 	std::memcpy(buffer, string.c_str(), string.length()+1);
 }
 

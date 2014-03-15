@@ -10,6 +10,11 @@ include_directories(
 	../../src/
 )
 
+add_subdirectory(
+	../../
+	../../../build/
+)
+
 add_executable(
 	import
 	import.cc
